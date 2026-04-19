@@ -6,13 +6,6 @@
 <title>중력 탐구 실험실 — 지구과학 II</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  /* 오프라인 폴백: Google Fonts 로드 실패 시 시스템 폰트 사용 */
-  :root {
-    --font-sans: 'Noto Sans KR', 'Apple SD Gothic Neo', '맑은 고딕', 'Malgun Gothic', sans-serif;
-    --font-mono: 'Space Mono', 'D2Coding', 'Consolas', monospace;
-  }
-</style>
-<style>
   :root {
     --bg: #0a0e1a;
     --surface: #111827;
@@ -31,14 +24,12 @@
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
-
   body {
-    font-family: var(--font-sans);
+    font-family: 'Noto Sans KR', sans-serif;
     background: var(--bg);
     color: var(--text);
     min-height: 100vh;
-    background-image:
+    background-image: 
       radial-gradient(ellipse 80% 50% at 50% -10%, rgba(0,212,255,0.08) 0%, transparent 60%),
       radial-gradient(ellipse 40% 30% at 80% 80%, rgba(124,58,237,0.06) 0%, transparent 50%);
   }
@@ -59,16 +50,25 @@
     z-index: 100;
     overflow: hidden;
   }
-  header > div:nth-child(2) { flex: 1; min-width: 0; overflow: hidden; }
-  header h1 { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  header > div:nth-child(2) {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+  }
+  header h1 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
   .logo-orb {
-    width: 36px; height: 36px;
+    width: 44px; height: 44px;
     background: conic-gradient(from 0deg, var(--accent), var(--accent2), var(--accent3), var(--accent));
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    font-size: 16px;
+    font-size: 20px;
     animation: spin 8s linear infinite;
     flex-shrink: 0;
+    width: 36px; height: 36px; font-size: 16px;
   }
   @keyframes spin { to { transform: rotate(360deg); } }
   header h1 { font-size: 17px; font-weight: 700; letter-spacing: -0.3px; }
@@ -82,15 +82,16 @@
     padding: 4px 12px; border-radius: 999px;
     display: flex; align-items: center; gap: 6px;
     white-space: nowrap;
-    flex-shrink: 0;
   }
   .status-pill::before {
     content: ''; width: 6px; height: 6px;
     border-radius: 50%; background: var(--accent);
     animation: blink 1.5s ease-in-out infinite;
   }
-  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
-  .header-actions { display: flex; gap: 6px; align-items: center; flex-shrink: 0; flex-wrap: nowrap; }
+  .header-actions {
+    display: flex; gap: 6px; align-items: center; flex-shrink: 0;
+    flex-wrap: nowrap;
+  }
   .header-btn {
     padding: 6px 14px; border-radius: 8px; border: 1px solid var(--border);
     background: var(--surface2); color: var(--text2);
@@ -102,10 +103,8 @@
   .header-btn.share:hover { background: rgba(0,212,255,0.1); }
   .header-btn.load  { border-color: rgba(124,58,237,0.4); color: #a78bfa; }
   .header-btn.load:hover  { background: rgba(124,58,237,0.1); }
-  .header-btn.reset { border-color: rgba(239,68,68,0.4); color: #f87171; }
-  .header-btn.reset:hover { background: rgba(239,68,68,0.1); }
 
-  /* ── MODAL ── */
+  /* ── SHARE MODAL ── */
   .modal-backdrop {
     display: none; position: fixed; inset: 0;
     background: rgba(0,0,0,0.75); backdrop-filter: blur(4px);
@@ -173,11 +172,12 @@
     font-size: 22px; cursor: pointer; line-height: 1; padding: 4px;
   }
   .modal-close:hover { color: var(--text); }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
   /* ── LAYOUT ── */
   main { max-width: 1200px; margin: 0 auto; padding: 32px 24px; }
 
-  /* ── SECTION LABELS ── */
+  /* ── SECTION HEADERS ── */
   .section-label {
     font-family: 'Space Mono', monospace;
     font-size: 10px; letter-spacing: 2px;
@@ -186,6 +186,7 @@
     display: flex; align-items: center; gap: 8px;
   }
   .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
   .section-title { font-size: 16px; font-weight: 700; margin-bottom: 20px; }
 
   /* ── CARDS ── */
@@ -204,11 +205,12 @@
     content: '';
     position: absolute; top: 0; left: 0; right: 0; height: 1px;
     background: linear-gradient(90deg, transparent, var(--accent), transparent);
-    opacity: 0; transition: opacity 0.3s;
+    opacity: 0;
+    transition: opacity 0.3s;
   }
   .card:hover::before { opacity: 1; }
 
-  /* ── FORMULA ── */
+  /* ── FORMULA EDITOR ── */
   .formula-box {
     background: var(--surface2);
     border: 1px solid var(--border);
@@ -234,11 +236,11 @@
     color: var(--accent);
     font-family: 'Space Mono', monospace;
     font-size: 13px;
-    width: 300px;
+    width: 260px;
     outline: none;
     transition: border-color 0.2s;
   }
-  .formula-inputs input[type="text"]:focus { border-color: var(--accent); }
+  .formula-inputs input:focus { border-color: var(--accent); }
   .formula-hint {
     font-size: 11px; color: var(--text3);
     padding: 8px 12px;
@@ -249,7 +251,9 @@
   }
 
   /* ── FLOOR TABS ── */
-  .floor-tabs { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+  .floor-tabs {
+    display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap;
+  }
   .floor-tab {
     padding: 10px 20px;
     border-radius: 10px;
@@ -270,7 +274,10 @@
 
   /* ── TABLE ── */
   .data-table-wrapper { overflow-x: auto; }
-  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  table {
+    width: 100%; border-collapse: collapse;
+    font-size: 13px;
+  }
   th {
     background: var(--surface2);
     color: var(--text3);
@@ -282,10 +289,18 @@
     border-bottom: 1px solid var(--border);
     white-space: nowrap;
   }
-  td { padding: 10px 14px; border-bottom: 1px solid rgba(31,47,74,0.5); vertical-align: middle; }
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid rgba(31,47,74,0.5);
+    vertical-align: middle;
+  }
   tr:last-child td { border-bottom: none; }
   tr:hover td { background: rgba(0,212,255,0.03); }
-  .row-num { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text3); text-align: center; }
+  .row-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px; color: var(--text3);
+    text-align: center;
+  }
 
   /* ── INPUTS ── */
   input[type="number"], input[type="text"].cell-input {
@@ -300,15 +315,19 @@
     transition: all 0.2s;
     font-family: 'Noto Sans KR', sans-serif;
   }
-  input[type="number"]:hover, input[type="number"]:focus {
+  input[type="number"]:hover,
+  input[type="number"]:focus {
     border-color: var(--border);
     background: var(--surface2);
   }
   input[type="number"]:focus { border-color: var(--accent); }
   input[type="number"]::placeholder { color: var(--text3); font-size: 12px; }
 
-  /* ── COMPUTED CELLS ── */
-  .computed { font-family: 'Space Mono', monospace; font-size: 13px; font-weight: 700; }
+  /* ── COMPUTED CELL ── */
+  .computed {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px; font-weight: 700;
+  }
   .computed.good  { color: var(--accent3); }
   .computed.warn  { color: var(--warn); }
   .computed.bad   { color: var(--danger); }
@@ -329,8 +348,11 @@
   }
   .add-row-btn:hover { border-color: var(--accent); color: var(--accent); }
 
-  /* ── FLOOR META ── */
-  .floor-meta { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; margin-bottom: 20px; }
+  /* ── FLOOR HEIGHT ── */
+  .floor-meta {
+    display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
   .meta-field {
     display: flex; align-items: center; gap: 10px;
     background: var(--surface2);
@@ -340,7 +362,9 @@
   }
   .meta-field label { font-size: 12px; color: var(--text3); white-space: nowrap; }
   .meta-field input {
-    background: transparent; border: none; outline: none;
+    background: transparent;
+    border: none;
+    outline: none;
     color: var(--accent);
     font-family: 'Space Mono', monospace;
     font-size: 14px; font-weight: 700;
@@ -363,30 +387,48 @@
     position: relative;
     overflow: hidden;
   }
-  .summary-card .floor-badge { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--text3); letter-spacing: 1px; margin-bottom: 8px; }
-  .summary-card .g-val { font-family: 'Space Mono', monospace; font-size: 26px; font-weight: 700; line-height: 1; margin-bottom: 4px; }
+  .summary-card .floor-badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; color: var(--text3);
+    letter-spacing: 1px; margin-bottom: 8px;
+  }
+  .summary-card .g-val {
+    font-family: 'Space Mono', monospace;
+    font-size: 26px; font-weight: 700;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
   .summary-card .g-unit { font-size: 12px; color: var(--text3); }
   .summary-card .g-ref  { font-size: 11px; color: var(--text3); margin-top: 8px; }
   .summary-card .g-diff { font-size: 12px; font-family: 'Space Mono', monospace; margin-top: 4px; }
   .diff-good { color: var(--accent3); }
   .diff-warn { color: var(--warn); }
   .diff-bad  { color: var(--danger); }
-  .summary-card .bar { margin-top: 14px; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
-  .summary-card .bar-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width 0.6s ease; }
 
+  .summary-card .bar {
+    margin-top: 14px; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden;
+  }
+  .summary-card .bar-fill {
+    height: 100%; border-radius: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transition: width 0.6s ease;
+  }
+
+  /* ── CHART ── */
   .chart-area {
     background: var(--surface2);
     border: 1px solid var(--border);
     border-radius: 12px;
     padding: 24px;
     position: relative;
-    height: 320px;
-    container-type: inline-size;
+    min-height: 240px;
   }
-  canvas#gravityChart {
-    width: 100% !important;
-    height: 100% !important;
+  .chart-placeholder {
+    display: flex; align-items: center; justify-content: center;
+    height: 200px; color: var(--text3); font-size: 13px;
+    flex-direction: column; gap: 8px;
   }
+  canvas#gravityChart { width: 100% !important; }
 
   /* ── TOAST ── */
   #toast {
@@ -404,7 +446,7 @@
   }
   #toast.show { transform: translateY(0); opacity: 1; }
 
-  /* ── BUTTONS ── */
+  /* ── BUTTON ── */
   .btn {
     padding: 10px 20px; border-radius: 8px; border: none;
     font-size: 13px; font-weight: 600; cursor: pointer;
@@ -417,30 +459,41 @@
     color: #000; box-shadow: 0 4px 16px rgba(0,212,255,0.25);
   }
   .btn-primary:hover { box-shadow: 0 6px 24px rgba(0,212,255,0.4); transform: translateY(-1px); }
-  .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--text2); }
+  .btn-ghost {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text2);
+  }
   .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-danger { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); color: var(--danger); }
+  .btn-danger:hover { background: rgba(239,68,68,0.2); }
 
-  /* ── DELETE BTN ── */
+  /* ── DELETE ROW ── */
   .del-btn {
     background: transparent; border: none; cursor: pointer;
     color: var(--text3); font-size: 14px; padding: 4px 6px;
-    border-radius: 4px; transition: all 0.2s; line-height: 1;
+    border-radius: 4px; transition: all 0.2s;
+    line-height: 1;
   }
   .del-btn:hover { color: var(--danger); background: rgba(239,68,68,0.1); }
 
-  /* ── LOADING ── */
-  #loadingOverlay {
-    position: fixed; inset: 0;
-    background: var(--bg);
-    display: flex; align-items: center; justify-content: center;
-    z-index: 9998; transition: opacity 0.5s;
+  /* ── DIVIDER ── */
+  .divider { height: 1px; background: var(--border); margin: 32px 0; }
+
+  /* ── PREVENT FONT SCALING ON ORIENTATION CHANGE ── */
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
-  .loading-ring {
-    width: 56px; height: 56px;
-    border: 3px solid var(--border);
-    border-top-color: var(--accent);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
+
+  /* ── CHART: only canvas expands, text stays fixed ── */
+  .chart-area {
+    container-type: inline-size;
+  }
+  canvas#gravityChart {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 340px;
   }
 
   /* ── RESPONSIVE ── */
@@ -449,11 +502,34 @@
     .formula-inputs input[type="text"] { width: 100%; }
     header { padding: 12px 14px; gap: 10px; }
   }
+
+  /* ── LANDSCAPE PHONE: lock text, let layout breathe ── */
   @media(max-height:500px) and (orientation:landscape) {
     header h1 { font-size: 16px; }
+    header p  { font-size: 11px; }
+    .status-pill { font-size: 10px; }
+    .section-label { font-size: 10px; }
     .floor-tab { font-size: 13px; padding: 8px 16px; }
     .summary-card .g-val { font-size: 22px; }
     .formula-display { font-size: 18px; }
+    th { font-size: 10px; }
+    td, input[type="number"], input[type="text"].cell-input { font-size: 13px; }
+  }
+
+  /* ── LOADING OVERLAY ── */
+  #loadingOverlay {
+    position: fixed; inset: 0;
+    background: var(--bg);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 9998;
+    transition: opacity 0.5s;
+  }
+  .loading-ring {
+    width: 56px; height: 56px;
+    border: 3px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
   }
 </style>
 </head>
@@ -468,7 +544,6 @@
     <p>지구과학 II — 단진자 운동으로 중력 계산</p>
   </div>
   <div class="header-actions">
-    <button class="header-btn reset" onclick="confirmReset()">🗑 초기화</button>
     <button class="header-btn load"  onclick="openModal('load')">📥 코드 가져오기</button>
     <button class="header-btn share" onclick="openModal('share')">📤 공유 코드</button>
     <div class="status-pill" id="syncStatus">내 기기에 저장됨 ✓</div>
@@ -477,6 +552,7 @@
 
 <main>
 
+  <!-- ① 중력 계산식 설정 -->
   <div class="section-label">① 중력 계산식 설정</div>
   <div class="card">
     <div class="section-title">중력 계산 공식 입력</div>
@@ -491,7 +567,7 @@
             oninput="updateFormulaDisplay()" />
         </label>
         <button class="btn btn-primary" onclick="saveFormula()">💾 공식 저장</button>
-        <button class="btn btn-ghost"   onclick="resetFormula()">↩ 기본값</button>
+        <button class="btn btn-ghost" onclick="resetFormula()">↩ 기본값</button>
       </div>
       <div class="formula-hint">
         📌 변수: <b>L</b> = 진자 길이(m), <b>T</b> = 주기(s)<br>
@@ -501,68 +577,87 @@
     </div>
   </div>
 
-  <div class="section-label">② 층별 실험 데이터 입력</div>
+  <!-- ② 층 수 설정 -->
+  <div class="section-label">② 층 수 설정</div>
   <div class="card">
-    <div class="floor-tabs" id="floorTabs">
-      <button class="floor-tab active" data-floor="1" onclick="switchFloor(1)">1층</button>
-      <button class="floor-tab" data-floor="2" onclick="switchFloor(2)">2층</button>
-      <button class="floor-tab" data-floor="3" onclick="switchFloor(3)">3층</button>
-      <button class="floor-tab" data-floor="4" onclick="switchFloor(4)">4층</button>
+    <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+      <span style="font-size:14px;color:var(--text2)">실험할 층 수:</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <button class="btn btn-ghost" onclick="changeFloorCount(-1)" style="padding:6px 14px;font-size:18px;line-height:1">−</button>
+        <span id="floorCountDisplay" style="font-family:'Space Mono',monospace;font-size:22px;font-weight:700;color:var(--accent);min-width:32px;text-align:center">4</span>
+        <button class="btn btn-ghost" onclick="changeFloorCount(1)"  style="padding:6px 14px;font-size:18px;line-height:1">+</button>
+      </div>
+      <span style="font-size:12px;color:var(--text3)">층 (최소 1층, 최대 20층)</span>
     </div>
-    <div id="floorContent"></div>
   </div>
 
-  <div class="section-label">③ 층별 중력 비교 요약</div>
+  <!-- ③ 층별 데이터 입력 -->
+  <div class="section-label">③ 층별 실험 데이터 입력</div>
   <div class="card">
-    <div class="summary-grid" id="summaryGrid"></div>
+    <div class="floor-tabs" id="floorTabs"></div>
+    <div id="floorContent"><!-- rendered by JS --></div>
   </div>
 
-  <div class="section-label">④ 데이터 시각화</div>
+  <!-- ④ 요약 및 분석 -->
+  <div class="section-label">④ 층별 중력 비교 요약</div>
+  <div class="card">
+    <div class="summary-grid" id="summaryGrid"><!-- rendered by JS --></div>
+  </div>
+
+  <!-- ⑤ 시각화 -->
+  <div class="section-label">⑤ 데이터 시각화</div>
   <div class="card">
     <div class="chart-area">
       <canvas id="gravityChart"></canvas>
     </div>
   </div>
 
-</main>
 
-<!-- 초기화 확인 모달 -->
-<div class="modal-backdrop" id="resetModal" onclick="if(event.target===this)closeResetModal()">
-  <div class="modal" style="max-width:400px;gap:20px;">
-    <button class="modal-close" onclick="closeResetModal()">×</button>
-    <h2>🗑 데이터 초기화</h2>
-    <p style="color:#f87171;line-height:1.7;">모든 층의 실험 데이터, 층 높이, 앱 측정값이 <b>완전히 삭제</b>됩니다.<br>이 작업은 되돌릴 수 없습니다.</p>
-    <div class="modal-hint" style="border-color:#ef4444;background:rgba(239,68,68,0.05);">💡 초기화 전에 <b>공유 코드</b>를 생성해 두면 나중에 복원할 수 있습니다.</div>
-    <div style="display:flex;gap:10px;flex-wrap:wrap;">
-      <button class="btn btn-ghost" style="flex:1" onclick="closeResetModal()">취소</button>
-      <button class="btn" style="flex:1;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.4);color:#f87171;" onclick="doReset()">🗑 초기화 확인</button>
+<!-- ── 확인 다이얼로그 ── -->
+<div class="modal-backdrop" id="confirmModal">
+  <div class="modal" style="max-width:380px;text-align:center">
+    <p id="confirmMsg" style="font-size:15px;font-weight:600;color:var(--text);line-height:1.6"></p>
+    <div class="modal-row" style="justify-content:center;margin-top:8px">
+      <button class="btn btn-danger" onclick="confirmOk()">초기화</button>
+      <button class="btn btn-ghost"  onclick="confirmCancel()">취소</button>
     </div>
   </div>
 </div>
 
-<!-- 공유 모달 -->
+<!-- ── 공유 모달 ── -->
 <div class="modal-backdrop" id="shareModal" onclick="if(event.target===this)closeModal()">
   <div class="modal">
     <button class="modal-close" onclick="closeModal()">×</button>
     <h2>📡 데이터 공유</h2>
     <div class="modal-tabs">
-      <button class="modal-tab active" id="tab-share" onclick="switchModalTab('share')">공유 코드 생성</button>
-      <button class="modal-tab"        id="tab-load"  onclick="switchModalTab('load')">코드 불러오기</button>
+      <button class="modal-tab active" id="tab-cfg"  onclick="switchModalTab('cfg')">⚙️ 설정 코드</button>
+      <button class="modal-tab"        id="tab-full" onclick="switchModalTab('full')">📦 전체 코드</button>
+      <button class="modal-tab"        id="tab-load" onclick="switchModalTab('load')">📥 불러오기</button>
     </div>
 
-    <div class="modal-panel active" id="panel-share">
-      <p>아래 코드를 <b>카카오톡·문자·채팅</b>으로 전송하세요.<br>받는 사람이 "코드 불러오기"에 붙여넣으면 즉시 데이터가 반영됩니다.</p>
-      <div class="modal-code-box" id="shareCodeBox">코드를 생성하려면 아래 버튼을 누르세요.</div>
+    <!-- 설정 코드 패널 (짧음) -->
+    <div class="modal-panel active" id="panel-cfg">
+      <p><b>공식·층 수·층 높이·학생 이름만</b> 포함한 짧은 코드입니다.<br>측정값(L, T)은 제외되어 코드가 훨씬 짧아요.</p>
+      <div class="modal-code-box" id="cfgCodeBox" style="letter-spacing:0.05em">—</div>
       <div class="modal-row">
-        <button class="btn btn-primary" onclick="generateShareCode()">⚡ 코드 생성</button>
-        <button class="btn btn-ghost"   onclick="copyShareCode()">📋 복사</button>
+        <button class="btn btn-primary" onclick="copyCfgCode()">📋 복사</button>
       </div>
     </div>
 
+    <!-- 전체 코드 패널 (측정값 포함) -->
+    <div class="modal-panel" id="panel-full">
+      <p>모든 측정값(L, T)까지 포함한 전체 코드입니다.<br>카카오톡·문자로 전송하세요.</p>
+      <div class="modal-code-box" id="fullCodeBox" style="letter-spacing:0.05em">—</div>
+      <div class="modal-row">
+        <button class="btn btn-primary" onclick="copyFullCode()">📋 복사</button>
+      </div>
+    </div>
+
+    <!-- 불러오기 패널 -->
     <div class="modal-panel" id="panel-load">
-      <p>친구에게 받은 <b>공유 코드</b>를 아래에 붙여넣고 불러오기를 누르세요.</p>
+      <p>받은 코드(설정 또는 전체)를 붙여넣고 불러오기를 누르세요.</p>
       <textarea class="modal-input" id="loadCodeInput" placeholder="공유 코드를 여기에 붙여넣으세요…"></textarea>
-      <div class="modal-hint">⚠ 불러오기를 하면 <b>현재 내 데이터를 덮어씁니다.</b> 먼저 내 공유 코드를 생성해 백업해 두세요.</div>
+      <div class="modal-hint">⚠ 불러오기를 하면 <b>현재 내 데이터를 덮어씁니다.</b></div>
       <div class="modal-row">
         <button class="btn btn-primary" onclick="loadShareCode()">📥 불러오기</button>
         <button class="btn btn-ghost"   onclick="closeModal()">취소</button>
@@ -571,67 +666,68 @@
   </div>
 </div>
 
+</main>
+
 <div id="toast"></div>
 
+<!-- Chart.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-<script>
-// Chart.js 로드 실패 시 안내 (오프라인 환경)
-window.addEventListener('load', () => {
-  if (typeof Chart === 'undefined') {
-    document.querySelector('.chart-area').innerHTML =
-      '<div style="display:flex;align-items:center;justify-content:center;height:200px;flex-direction:column;gap:8px;color:#64748b;font-size:13px;">' +
-      '<span style="font-size:24px">📶</span>' +
-      '<span>차트는 인터넷 연결 시 표시됩니다</span>' +
-      '<span style="font-size:11px;color:#475569">오프라인 환경에서는 데이터 입력·요약은 정상 동작합니다</span>' +
-      '</div>';
-  }
-});
-</script>
 <script>
 // ─────────────────────────────────────────
 //  STATE
 // ─────────────────────────────────────────
-const FLOORS = [1,2,3,4];
 const DEFAULT_FORMULA = "4 * Math.PI * Math.PI * L / (T * T)";
 const DEFAULT_ROWS = () => Array.from({length:3}, (_,i) => ({
   id: Date.now()+i, student:'', L:'', T:'', note:''
 }));
+const DEFAULT_FLOOR = () => ({
+  ceilThick: '',   // 슬래브(시멘트) 두께 m
+  roomHeight: '',  // 바닥~천장 높이 m
+  appG: '',
+  rows: DEFAULT_ROWS()
+});
 
+// FLOORS는 state.floorCount에서 동적 생성
 let state = {
   formula: DEFAULT_FORMULA,
-  floors: {
-    1: { height:'', appG:'', rows: DEFAULT_ROWS() },
-    2: { height:'', appG:'', rows: DEFAULT_ROWS() },
-    3: { height:'', appG:'', rows: DEFAULT_ROWS() },
-    4: { height:'', appG:'', rows: DEFAULT_ROWS() },
-  }
+  floorCount: 4,
+  floors: { 1: DEFAULT_FLOOR(), 2: DEFAULT_FLOOR(), 3: DEFAULT_FLOOR(), 4: DEFAULT_FLOOR() }
 };
 let currentFloor = 1;
+
+function getFloors() {
+  return Array.from({length: state.floorCount}, (_, i) => i + 1);
+}
 let chart = null;
 
 // ─────────────────────────────────────────
-//  STORAGE
+//  STORAGE — localStorage 사용 (window.storage 제거)
+//  공동 작업은 내보내기/가져오기 버튼으로 수행
 // ─────────────────────────────────────────
 function sanitizeState(s) {
-  return {
-    formula: String(s.formula || DEFAULT_FORMULA),
-    floors: Object.fromEntries(
-      FLOORS.map(f => {
-        const fl = s.floors[f] || {};
-        return [f, {
-          height: String(fl.height ?? ''),
-          appG:   String(fl.appG   ?? ''),
-          rows: (fl.rows || []).map(r => ({
-            id:      Number(r.id || Date.now()),
-            student: String(r.student || ''),
-            L:       String(r.L || ''),
-            T:       String(r.T || ''),
-            note:    String(r.note || ''),
-          }))
-        }];
-      })
-    )
-  };
+  const count = Math.max(1, Math.min(20, parseInt(s.floorCount) || 4));
+  const floors = {};
+  // floors 객체의 모든 키를 보존 (floorCount 초과분도 저장 — 줄였다 늘려도 복원)
+  const allKeys = s.floors ? Object.keys(s.floors).map(Number).filter(n => n >= 1 && n <= 20) : [];
+  // count까지는 반드시 포함
+  const keys = new Set([...Array.from({length: count}, (_, i) => i + 1), ...allKeys]);
+  keys.forEach(f => {
+    const fl = (s.floors && s.floors[f]) || {};
+    floors[f] = {
+      ceilThick:  String(fl.ceilThick  ?? ''),
+      roomHeight: String(fl.roomHeight ?? ''),
+      appG:       String(fl.appG       ?? ''),
+      rows: (fl.rows || []).map(r => ({
+        id:      Number(r.id || Date.now()),
+        student: String(r.student || ''),
+        L:       String(r.L || ''),
+        T:       String(r.T || ''),
+        note:    String(r.note || ''),
+      }))
+    };
+    if (!floors[f].rows.length) floors[f].rows = DEFAULT_ROWS();
+  });
+  return { formula: String(s.formula || DEFAULT_FORMULA), floorCount: count, floors };
 }
 
 function loadState() {
@@ -640,20 +736,23 @@ function loadState() {
     if (raw) {
       const saved = JSON.parse(raw);
       state = { ...state, ...saved };
-      FLOORS.forEach(f => {
-        if (!state.floors[f]) state.floors[f] = { height:'', appG:'', rows: DEFAULT_ROWS() };
-      });
+      for (let f = 1; f <= state.floorCount; f++) {
+        if (!state.floors[f]) state.floors[f] = DEFAULT_FLOOR();
+      }
     }
-  } catch(e) {}
+  } catch(e) { /* 첫 로드 */ }
 }
 
 function saveState() {
   try {
     localStorage.setItem('gravity_lab_state', JSON.stringify(sanitizeState(state)));
     updateStatus('내 기기에 저장됨 ✓');
-  } catch(e) { updateStatus('저장 실패'); }
+  } catch(e) {
+    updateStatus('저장 실패');
+  }
 }
 
+// Auto-save debounce
 let saveTimer = null;
 function queueSave() {
   clearTimeout(saveTimer);
@@ -665,87 +764,122 @@ function updateStatus(msg) {
   document.getElementById('syncStatus').textContent = msg;
 }
 
-function confirmReset() { document.getElementById('resetModal').classList.add('open'); }
-function closeResetModal() { document.getElementById('resetModal').classList.remove('open'); }
-function doReset() {
-  state = {
-    formula: DEFAULT_FORMULA,
-    floors: {
-      1: { height:'', appG:'', rows: DEFAULT_ROWS() },
-      2: { height:'', appG:'', rows: DEFAULT_ROWS() },
-      3: { height:'', appG:'', rows: DEFAULT_ROWS() },
-      4: { height:'', appG:'', rows: DEFAULT_ROWS() },
-    }
+// ── 공유 코드 ──
+
+// 설정 전용 객체 (공식·층수·높이·appG·학생이름)
+function buildCfgObj() {
+  const s = sanitizeState(state);
+  const floors = {};
+  Object.keys(s.floors).forEach(f => {
+    const fl = s.floors[f];
+    const students = fl.rows.map(r => r.student).filter(Boolean);
+    floors[f] = {
+      c: fl.ceilThick  || undefined,
+      r: fl.roomHeight || undefined,
+      g: fl.appG       || undefined,
+      s: students.length ? students : undefined,
+    };
+    // 빈 키 제거
+    Object.keys(floors[f]).forEach(k => floors[f][k] === undefined && delete floors[f][k]);
+    if (!Object.keys(floors[f]).length) delete floors[f];
+  });
+  return { v:2, f: s.floorCount, fm: s.formula === DEFAULT_FORMULA ? undefined : s.formula, fl: floors };
+}
+
+// 전체 state 객체
+function buildFullObj() {
+  return sanitizeState(state);
+}
+
+function toCode(obj) {
+  return btoa(unescape(encodeURIComponent(JSON.stringify(obj))));
+}
+
+function copyToClipboard(text, label) {
+  const doIt = t => {
+    const ta = document.createElement('textarea');
+    ta.value = t; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); ta.remove();
   };
-  document.getElementById('formulaInput').value = DEFAULT_FORMULA;
-  updateFormulaDisplay();
-  renderAll();
-  saveState();
-  closeResetModal();
-  showToast('🗑 데이터가 초기화되었습니다');
+  navigator.clipboard.writeText(text)
+    .then(() => showToast('📋 ' + label + ' 복사됨!'))
+    .catch(() => { doIt(text); showToast('📋 ' + label + ' 복사됨!'); });
 }
 
-// ─────────────────────────────────────────
-// ─────────────────────────────────────────
-function generateShareCode() {
-  try {
-    const json = JSON.stringify(sanitizeState(state));
-    const code = btoa(unescape(encodeURIComponent(json)));
-    document.getElementById('shareCodeBox').textContent = code;
-    showToast('✅ 공유 코드 생성 완료!');
-  } catch(e) { showToast('⚠ 생성 실패: ' + e.message); }
+function copyCfgCode() {
+  const code = toCode(buildCfgObj());
+  document.getElementById('cfgCodeBox').textContent = code;
+  copyToClipboard(code, '설정 코드');
 }
 
-function copyShareCode() {
-  const code = document.getElementById('shareCodeBox').textContent;
-  if (!code || code.includes('버튼')) { showToast('⚠ 먼저 코드를 생성하세요'); return; }
-  navigator.clipboard.writeText(code)
-    .then(() => showToast('📋 클립보드에 복사되었습니다!'))
-    .catch(() => {
-      const ta = document.createElement('textarea');
-      ta.value = code; document.body.appendChild(ta);
-      ta.select(); document.execCommand('copy'); ta.remove();
-      showToast('📋 복사 완료!');
-    });
+function copyFullCode() {
+  const code = toCode(buildFullObj());
+  document.getElementById('fullCodeBox').textContent = code;
+  copyToClipboard(code, '전체 코드');
 }
 
 function loadShareCode() {
   const code = document.getElementById('loadCodeInput').value.trim();
   if (!code) { showToast('⚠ 코드를 붙여넣어 주세요'); return; }
   try {
-    const json = decodeURIComponent(escape(atob(code)));
-    const parsed = JSON.parse(json);
-    state = { ...state, ...parsed };
-    FLOORS.forEach(f => {
-      if (!state.floors[f]) state.floors[f] = { height:'', appG:'', rows: DEFAULT_ROWS() };
-    });
+    const parsed = JSON.parse(decodeURIComponent(escape(atob(code))));
+
+    if (parsed.v === 2) {
+      // 설정 코드 포맷 (v:2)
+      state.floorCount = parsed.f || state.floorCount;
+      if (parsed.fm) state.formula = parsed.fm;
+      if (parsed.fl) {
+        Object.keys(parsed.fl).forEach(f => {
+          const fi = parseInt(f);
+          if (!state.floors[fi]) state.floors[fi] = DEFAULT_FLOOR();
+          const src = parsed.fl[f];
+          if (src.c !== undefined) state.floors[fi].ceilThick  = src.c;
+          if (src.r !== undefined) state.floors[fi].roomHeight = src.r;
+          if (src.g !== undefined) state.floors[fi].appG       = src.g;
+          if (src.s) {
+            src.s.forEach((name, i) => {
+              if (!state.floors[fi].rows[i]) state.floors[fi].rows[i] = { id: Date.now()+i, student:'', L:'', T:'', note:'' };
+              state.floors[fi].rows[i].student = name;
+            });
+          }
+        });
+      }
+      showToast('📥 설정 코드 불러오기 완료!');
+    } else {
+      // 전체 코드 포맷 (기존 sanitizeState 구조)
+      state = { ...state, ...parsed };
+      for (let f = 1; f <= state.floorCount; f++) {
+        if (!state.floors[f]) state.floors[f] = DEFAULT_FLOOR();
+      }
+      showToast('📥 전체 데이터 불러오기 완료!');
+    }
+
     document.getElementById('formulaInput').value = state.formula;
     updateFormulaDisplay();
     renderAll();
     saveState();
     closeModal();
-    showToast('📥 데이터 불러오기 완료!');
   } catch(e) { showToast('⚠ 코드가 올바르지 않습니다'); }
 }
 
-// ─────────────────────────────────────────
-//  MODAL
-// ─────────────────────────────────────────
+// ── 모달 제어 ──
 function openModal(tab) {
   document.getElementById('shareModal').classList.add('open');
-  switchModalTab(tab || 'share');
-  if (tab === 'share') generateShareCode();
+  switchModalTab(tab || 'cfg');
+  // 모달 열릴 때 코드 미리 생성
+  document.getElementById('cfgCodeBox').textContent  = toCode(buildCfgObj());
+  document.getElementById('fullCodeBox').textContent = toCode(buildFullObj());
 }
 function closeModal() {
   document.getElementById('shareModal').classList.remove('open');
   document.getElementById('loadCodeInput').value = '';
 }
 function switchModalTab(tab) {
-  ['share','load'].forEach(t => {
+  ['cfg','full','load'].forEach(t => {
     document.getElementById('tab-'+t).classList.toggle('active', t===tab);
     document.getElementById('panel-'+t).classList.toggle('active', t===tab);
   });
-  if (tab === 'share') generateShareCode();
 }
 
 // ─────────────────────────────────────────
@@ -753,6 +887,7 @@ function switchModalTab(tab) {
 // ─────────────────────────────────────────
 function updateFormulaDisplay() {
   const raw = document.getElementById('formulaInput').value;
+  // Pretty display: replace JS syntax with math notation
   let pretty = raw
     .replace(/Math\.PI\*\*2/g,'π²')
     .replace(/Math\.PI\s*\*\s*Math\.PI/g,'π²')
@@ -780,12 +915,13 @@ function resetFormula() {
   renderAll();
 }
 
-// ── 한국 해면 기준 중력 (WGS-84, 위도 37.5°) ──
+// ── 한국 해면 기준 중력 (국제 중력공식 WGS-84, 고도 0m) ──
+// 위도 37.5° (한국 중부), 고도 보정 없음
 function getKoreaG() {
   const phi = 37.5 * Math.PI / 180;
-  const ge  = 9.7803253359;
-  const k   = 0.00193185265241;
-  const e2  = 0.00669437999014;
+  const ge = 9.7803253359;
+  const k  = 0.00193185265241;
+  const e2 = 0.00669437999014;
   const sinPhi = Math.sin(phi);
   return ge * (1 + k * sinPhi * sinPhi) / Math.sqrt(1 - e2 * sinPhi * sinPhi);
 }
@@ -793,8 +929,8 @@ function getKoreaG() {
 function calcG(L, T) {
   if (!L || !T || isNaN(L) || isNaN(T) || T==0) return null;
   try {
-    const Lv = parseFloat(L), Tv = parseFloat(T);
-    const result = eval(state.formula.replace(/\bL\b/g, Lv).replace(/\bT\b/g, Tv));
+    L = parseFloat(L); T = parseFloat(T);
+    const result = eval(state.formula.replace(/L/g, L).replace(/T/g, T));
     return isFinite(result) ? result : null;
   } catch(e) { return null; }
 }
@@ -803,6 +939,7 @@ function calcG(L, T) {
 //  FLOOR RENDER
 // ─────────────────────────────────────────
 function switchFloor(f) {
+  if (!state.floors[f]) state.floors[f] = DEFAULT_FLOOR();
   currentFloor = f;
   document.querySelectorAll('.floor-tab').forEach(t => {
     t.classList.toggle('active', parseInt(t.dataset.floor) === f);
@@ -810,61 +947,234 @@ function switchFloor(f) {
   renderFloorContent();
 }
 
+function changeFloorCount(delta) {
+  const newCount = Math.max(1, Math.min(20, state.floorCount + delta));
+  if (newCount === state.floorCount) return;
+  state.floorCount = newCount;
+  // 새 층 추가 시: floors 객체에 해당 키가 없을 때만 빈 층 생성 (기존 데이터 보존)
+  // 층 삭제 시: floors 객체에서 제거하지 않음 → 다시 늘리면 데이터 복원
+  for (let f = 1; f <= newCount; f++) {
+    if (!state.floors[f]) state.floors[f] = DEFAULT_FLOOR();
+  }
+  if (currentFloor > newCount) currentFloor = newCount;
+  queueSave();
+  renderFloorTabs();
+  renderFloorContent();
+  renderSummary();
+  updateChart();
+}
+
+function calcFloorHeight(f) {
+  const fl = state.floors[f];
+  // 현재 층의 누적 높이 = sum of (roomHeight + ceilThick) for floors 1..f-1, then + roomHeight of floor f 자체는 포함 안 함
+  // 즉, f층 바닥면의 해면 기준 높이
+  let h = 0;
+  for (let i = 1; i < f; i++) {
+    const fi = state.floors[i] || {};
+    h += (parseFloat(fi.roomHeight) || 0) + (parseFloat(fi.ceilThick) || 0);
+  }
+  return h;
+}
+
+function renderFloorTabs() {
+  const tabs = document.getElementById('floorTabs');
+  if (!tabs) return;
+  const floors = getFloors();
+  tabs.innerHTML = floors.map(f =>
+    '<button class="floor-tab' + (f === currentFloor ? ' active' : '') +
+    '" data-floor="' + f + '" onclick="switchFloor(' + f + ')">' + f + '층</button>'
+  ).join('');
+  document.getElementById('floorCountDisplay').textContent = state.floorCount;
+}
+
+function calcTotalCeilThick(f) {
+  // f층까지 누적 시멘트 두께 (1층 포함 ~ f층 포함)
+  let t = 0;
+  for (let i = 1; i <= f; i++) {
+    t += parseFloat((state.floors[i] || {}).ceilThick || 0);
+  }
+  return t;
+}
+
+// 버튼 클릭 시: 현재 층 값을 나머지 층에 덮어씀
+function syncHeightFromCurrent() {
+  const f = currentFloor;
+  const src = state.floors[f];
+  getFloors().forEach(i => {
+    if (i === f || !state.floors[i]) return;
+    state.floors[i].ceilThick  = src.ceilThick;
+    state.floors[i].roomHeight = src.roomHeight;
+  });
+  queueSave();
+  showToast('✅ ' + f + '층 값을 나머지 층에 적용했습니다');
+}
+
+// 버튼 클릭 시: 현재 층 학생 이름을 나머지 층에 복사
+function syncStudentsFromCurrent() {
+  const f = currentFloor;
+  const srcRows = state.floors[f].rows;
+  getFloors().forEach(i => {
+    if (i === f || !state.floors[i]) return;
+    srcRows.forEach((r, idx) => {
+      if (!state.floors[i].rows[idx]) {
+        state.floors[i].rows[idx] = { id: Date.now()+idx, student:'', L:'', T:'', note:'' };
+      }
+      state.floors[i].rows[idx].student = r.student;
+    });
+  });
+  queueSave();
+  showToast('✅ ' + f + '층 학생 이름을 나머지 층에 적용했습니다');
+}
+
+// 커스텀 확인 다이얼로그 (confirm() 은 sandbox에서 차단됨)
+let _confirmCallback = null;
+function showConfirm(msg, onOk) {
+  _confirmCallback = onOk;
+  document.getElementById('confirmMsg').textContent = msg;
+  document.getElementById('confirmModal').classList.add('open');
+}
+function confirmOk() {
+  document.getElementById('confirmModal').classList.remove('open');
+  if (_confirmCallback) { _confirmCallback(); _confirmCallback = null; }
+}
+function confirmCancel() {
+  document.getElementById('confirmModal').classList.remove('open');
+  _confirmCallback = null;
+}
+
+// 현재 층 초기화
+function resetCurrentFloor() {
+  showConfirm(currentFloor + '층의 모든 입력값을 초기화할까요?', () => {
+    state.floors[currentFloor] = DEFAULT_FLOOR();
+    queueSave();
+    renderFloorContent();
+    renderSummary();
+    updateChart();
+    showToast('🗑 ' + currentFloor + '층 초기화 완료');
+  });
+}
+
+// 전체 초기화
+function resetAllFloors() {
+  showConfirm('모든 층의 입력값을 초기화할까요? (층 수 설정은 유지됩니다)', () => {
+    getFloors().forEach(f => { state.floors[f] = DEFAULT_FLOOR(); });
+    queueSave();
+    renderFloorContent();
+    renderSummary();
+    updateChart();
+    showToast('🗑 전체 초기화 완료');
+  });
+}
+
 function renderFloorContent() {
   const f = currentFloor;
+  if (!state.floors[f]) state.floors[f] = DEFAULT_FLOOR();
   const floor = state.floors[f];
   const container = document.getElementById('floorContent');
+  const autoH = calcFloorHeight(f);
+  const autoHStr = autoH > 0 ? autoH.toFixed(3) : '—';
+  const totalCeil = calcTotalCeilThick(f);
+  const totalCeilStr = totalCeil > 0 ? totalCeil.toFixed(3) : '—';
 
-  container.innerHTML = `
-    <div class="floor-meta">
-      <div class="meta-field">
-        <label>${f}층 높이 (지면 기준)</label>
-        <input type="number" step="0.01" min="0"
-          value="${floor.height}" placeholder="0.00"
-          oninput="state.floors[${f}].height=this.value; queueSave(); renderSummary();" />
-        <span>m</span>
-      </div>
-      <div class="meta-field">
-        <label>📱 앱 측정 중력값</label>
-        <input type="number" step="0.0001" min="0"
-          value="${floor.appG}" placeholder="9.8000"
-          oninput="state.floors[${f}].appG=this.value; queueSave(); renderSummary(); updateChart();" />
-        <span>m/s²</span>
-      </div>
-    </div>
+  container.innerHTML =
+    '<div class="floor-meta">' +
 
-    <div class="data-table-wrapper">
-      <table>
-        <thead>
-          <tr>
-            <th style="width:40px">#</th>
-            <th>학생/모둠</th>
-            <th>진자 길이 L (m)</th>
-            <th>주기 T (s)</th>
-            <th>계산된 g (m/s²)</th>
-            <th>오차 %</th>
-            <th>메모</th>
-            <th style="width:36px"></th>
-          </tr>
-        </thead>
-        <tbody id="tableBody_${f}"></tbody>
-      </table>
-    </div>
-    <button class="add-row-btn" onclick="addRow(${f})">+ 행 추가</button>
-  `;
+    // 슬래브 두께
+    '<div class="meta-field">' +
+      '<label>' + f + '층 슬래브(시멘트) 두께</label>' +
+      '<input type="number" step="0.001" min="0" placeholder="예: 0.200"' +
+        ' id="input_ceilThick_' + f + '"' +
+        ' value="' + escHtml(floor.ceilThick) + '"' +
+        ' oninput="state.floors[' + f + '].ceilThick=this.value; queueSave(); refreshHeightDisplay(); renderSummary();" />' +
+      '<span>m</span>' +
+    '</div>' +
+
+    // 바닥~천장
+    '<div class="meta-field">' +
+      '<label>' + f + '층 바닥~천장 높이</label>' +
+      '<input type="number" step="0.001" min="0" placeholder="예: 2.800"' +
+        ' id="input_roomHeight_' + f + '"' +
+        ' value="' + escHtml(floor.roomHeight) + '"' +
+        ' oninput="state.floors[' + f + '].roomHeight=this.value; queueSave(); refreshHeightDisplay(); renderSummary();" />' +
+      '<span>m</span>' +
+    '</div>' +
+
+    // 자동계산: 바닥면 높이
+    '<div class="meta-field" style="background:rgba(0,212,255,0.05);border-color:rgba(0,212,255,0.2)">' +
+      '<label>' + f + '층 바닥면 높이 (자동계산)</label>' +
+      '<span id="autoHeightVal_' + f + '" style="font-family:Space Mono,monospace;font-size:14px;font-weight:700;color:var(--accent);min-width:60px">' + autoHStr + '</span>' +
+      '<span>m</span>' +
+    '</div>' +
+
+    // 자동계산: 시멘트 누적 두께 (부게보정용)
+    '<div class="meta-field" style="background:rgba(124,58,237,0.06);border-color:rgba(124,58,237,0.25)">' +
+      '<label>1~' + f + '층 시멘트 누적 두께 (부게보정)</label>' +
+      '<span id="totalCeilVal_' + f + '" style="font-family:Space Mono,monospace;font-size:14px;font-weight:700;color:#a78bfa;min-width:60px">' + totalCeilStr + '</span>' +
+      '<span>m</span>' +
+    '</div>' +
+
+    // 앱 측정값
+    '<div class="meta-field">' +
+      '<label>📱 앱 측정 중력값</label>' +
+      '<input type="number" step="0.0001" min="0" placeholder="9.7995"' +
+        ' value="' + escHtml(floor.appG) + '"' +
+        ' oninput="state.floors[' + f + '].appG=this.value; queueSave(); renderSummary();" />' +
+      '<span>m/s²</span>' +
+    '</div>' +
+
+    '</div>' +
+
+    '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">' +
+      '<button class="btn btn-ghost" style="font-size:12px;padding:6px 14px" onclick="syncHeightFromCurrent()">📐 이 층 높이값 → 다른 층 자동입력</button>' +
+      '<button class="btn btn-ghost" style="font-size:12px;padding:6px 14px" onclick="syncStudentsFromCurrent()">👥 이 층 학생 이름 → 다른 층 자동입력</button>' +
+      '<button class="btn btn-danger" style="font-size:12px;padding:6px 14px;margin-left:auto" onclick="resetCurrentFloor()">🗑 이 층 초기화</button>' +
+      '<button class="btn btn-danger" style="font-size:12px;padding:6px 14px" onclick="resetAllFloors()">🗑 전체 초기화</button>' +
+    '</div>' +
+
+    '<div class="data-table-wrapper">' +
+    '<table><thead><tr>' +
+      '<th style="width:40px">#</th>' +
+      '<th>학생/모둠</th>' +
+      '<th>진자 길이 L (m)</th>' +
+      '<th>주기 T (s)</th>' +
+      '<th>계산된 g (m/s²)</th>' +
+      '<th>오차 %</th>' +
+      '<th>메모</th>' +
+      '<th style="width:36px"></th>' +
+    '</tr></thead>' +
+    '<tbody id="tableBody_' + f + '"></tbody>' +
+    '</table></div>' +
+    '<button class="add-row-btn" onclick="addRow(' + f + ')">+ 행 추가</button>';
 
   renderRows(f);
+}
+
+function refreshHeightDisplay() {
+  const f = currentFloor;
+  const hEl = document.getElementById('autoHeightVal_' + f);
+  if (hEl) {
+    const h = calcFloorHeight(f);
+    hEl.textContent = h > 0 ? h.toFixed(3) : '—';
+  }
+  const cEl = document.getElementById('totalCeilVal_' + f);
+  if (cEl) {
+    const t = calcTotalCeilThick(f);
+    cEl.textContent = t > 0 ? t.toFixed(3) : '—';
+  }
+  renderSummary();
+  updateChart();
 }
 
 function renderRows(f) {
   const floor = state.floors[f];
   const tbody = document.getElementById('tableBody_' + f);
   if (!tbody) return;
-  const refG = getKoreaG();
-
   tbody.innerHTML = floor.rows.map((row, i) => {
     const g = calcG(row.L, row.T);
-    const diff = g !== null ? ((g - refG) / refG * 100) : null;
+    const gStr = g !== null ? g.toFixed(4) : null;
+    const refGRow = getKoreaG();
+    const diff = g !== null ? ((g - refGRow) / refGRow * 100) : null;
+    const diffStr = diff !== null ? (diff >= 0 ? '+' : '') + diff.toFixed(2) + '%' : null;
     const gClass = g === null ? 'empty' : Math.abs(diff) < 2 ? 'good' : Math.abs(diff) < 5 ? 'warn' : 'bad';
 
     return `
@@ -872,8 +1182,10 @@ function renderRows(f) {
         <td class="row-num">${i+1}</td>
         <td>
           <input type="text" class="cell-input" placeholder="이름/모둠"
+            id="student_${f}_${i}"
             value="${escHtml(row.student)}"
-            oninput="state.floors[${f}].rows[${i}].student=this.value; queueSave();" />
+            oninput="onStudentInput(${f},${i},this.value);"
+            onkeydown="if(event.key==='Enter'){event.preventDefault();focusNextStudent(${f},${i});}" />
         </td>
         <td>
           <input type="number" step="0.001" min="0" placeholder="예: 1.000"
@@ -886,10 +1198,10 @@ function renderRows(f) {
             oninput="state.floors[${f}].rows[${i}].T=this.value; queueSave(); refreshRow(${f},${i});" />
         </td>
         <td id="g_${f}_${i}" class="computed ${gClass}">
-          ${g !== null ? g.toFixed(4) : '—'}
+          ${gStr !== null ? gStr : '—'}
         </td>
         <td id="diff_${f}_${i}" class="computed ${gClass}">
-          ${diff !== null ? (diff>=0?'+':'')+diff.toFixed(2)+'%' : '—'}
+          ${diffStr !== null ? diffStr : '—'}
         </td>
         <td>
           <input type="text" class="cell-input" placeholder="비고"
@@ -906,8 +1218,8 @@ function renderRows(f) {
 function refreshRow(f, i) {
   const row = state.floors[f].rows[i];
   const g = calcG(row.L, row.T);
-  const refG = getKoreaG();
-  const diff = g !== null ? ((g - refG) / refG * 100) : null;
+  const refGRow = getKoreaG();
+  const diff = g !== null ? ((g - refGRow) / refGRow * 100) : null;
   const gClass = g === null ? 'empty' : Math.abs(diff) < 2 ? 'good' : Math.abs(diff) < 5 ? 'warn' : 'bad';
   const gEl = document.getElementById(`g_${f}_${i}`);
   const dEl = document.getElementById(`diff_${f}_${i}`);
@@ -915,6 +1227,26 @@ function refreshRow(f, i) {
   if (dEl) { dEl.textContent = diff !== null ? (diff>=0?'+':'')+diff.toFixed(2)+'%' : '—'; dEl.className = 'computed ' + gClass; }
   renderSummary();
   updateChart();
+}
+
+function onStudentInput(f, i, val) {
+  state.floors[f].rows[i].student = val;
+  queueSave();
+}
+
+function focusNextStudent(f, i) {
+  // 다음 행이 없으면 행 추가 후 포커스
+  if (i + 1 >= state.floors[f].rows.length) {
+    addRow(f);
+    // addRow 후 renderRows 가 호출되므로 setTimeout 으로 대기
+    setTimeout(() => {
+      const next = document.getElementById('student_' + f + '_' + (i + 1));
+      if (next) next.focus();
+    }, 30);
+  } else {
+    const next = document.getElementById('student_' + f + '_' + (i + 1));
+    if (next) next.focus();
+  }
 }
 
 function addRow(f) {
@@ -936,7 +1268,10 @@ function delRow(f, i) {
 //  SUMMARY
 // ─────────────────────────────────────────
 function floorAvgG(f) {
-  const vals = state.floors[f].rows.map(r => calcG(r.L, r.T)).filter(v => v !== null);
+  if (!state.floors[f]) return null;
+  const vals = state.floors[f].rows
+    .map(r => calcG(r.L, r.T))
+    .filter(v => v !== null);
   if (!vals.length) return null;
   return vals.reduce((a,b)=>a+b,0) / vals.length;
 }
@@ -944,39 +1279,40 @@ function floorAvgG(f) {
 function renderSummary() {
   const grid = document.getElementById('summaryGrid');
   if (!grid) return;
-  const refG = getKoreaG();
-
-  grid.innerHTML = FLOORS.map(f => {
+  grid.innerHTML = getFloors().map(f => {
     const floor = state.floors[f];
-    const vals = floor.rows.map(r => calcG(r.L, r.T)).filter(v => v !== null);
+    const vals = state.floors[f].rows.map(r => calcG(r.L, r.T)).filter(v => v !== null);
     const avg = vals.length ? vals.reduce((a,b)=>a+b,0)/vals.length : null;
     const appG = parseFloat(floor.appG) || null;
+    const refG = getKoreaG();
     const diff = avg !== null ? ((avg - refG) / refG * 100) : null;
     const appDiff = (avg !== null && appG !== null) ? ((avg - appG) / appG * 100) : null;
     const gColor = diff === null ? '#64748b' : Math.abs(diff) < 2 ? '#10b981' : Math.abs(diff) < 5 ? '#f59e0b' : '#ef4444';
     const diffClass = diff === null ? '' : Math.abs(diff) < 2 ? 'diff-good' : Math.abs(diff) < 5 ? 'diff-warn' : 'diff-bad';
     const barW = avg !== null ? Math.min(100, Math.abs(avg / 12) * 100) : 0;
-
-    const rowVals = floor.rows.map((r,i) => {
+    const rowVals = state.floors[f].rows.map((r,i) => {
       const g = calcG(r.L, r.T);
       return g !== null
-        ? `<span style="font-size:11px;color:#94a3b8">${r.student||('측정'+(i+1))}: <b style="color:#e2e8f0;font-family:'Space Mono',monospace">${g.toFixed(4)}</b></span>`
+        ? '<span style="font-size:11px;color:#94a3b8">'+(r.student||('측정'+(i+1)))+': <b style="color:#e2e8f0;font-family:Space Mono,monospace">'+g.toFixed(4)+'</b></span>'
         : null;
     }).filter(Boolean);
 
-    return `<div class="summary-card">
-      <div class="floor-badge">${f}층 ${floor.height ? '— '+floor.height+'m' : ''}</div>
-      <div class="g-val" style="color:${gColor}">${avg !== null ? avg.toFixed(4) : '—'}</div>
-      <div class="g-unit">m/s² (단진자 평균, n=${vals.length})</div>
-      ${rowVals.length ? `<div style="margin-top:10px;display:flex;flex-direction:column;gap:3px;border-left:2px solid #1f2f4a;padding-left:10px">${rowVals.join('')}</div>` : ''}
-      <div class="g-ref" style="margin-top:10px">기준값(${refG.toFixed(5)}) 대비</div>
-      <div class="g-diff ${diffClass}">${diff !== null ? (diff>=0?'+':'')+diff.toFixed(3)+'%' : '측정값 없음'}</div>
-      ${appG !== null
-        ? `<div class="g-ref" style="margin-top:8px">📱 앱 측정값: ${appG.toFixed(4)} m/s²</div>
-           <div class="g-diff ${diffClass}">${appDiff !== null ? '단진자 vs 앱: '+(appDiff>=0?'+':'')+appDiff.toFixed(3)+'%' : ''}</div>`
-        : ''}
-      <div class="bar"><div class="bar-fill" style="width:${barW}%"></div></div>
-    </div>`;
+    return '<div class="summary-card">'
+      +(function(){
+        const h = calcFloorHeight(f);
+        return '<div class="floor-badge">'+f+'층'+(h>0?' — 바닥높이 '+h.toFixed(2)+'m':'')+'</div>';
+      })()
+      +'<div class="g-val" style="color:'+gColor+'">'+(avg !== null ? avg.toFixed(4) : '—')+'</div>'
+      +'<div class="g-unit">m/s\u00b2 (단진자 평균, n='+vals.length+')</div>'
+      +(rowVals.length ? '<div style="margin-top:10px;display:flex;flex-direction:column;gap:3px;border-left:2px solid #1f2f4a;padding-left:10px">'+rowVals.join('')+'</div>' : '')
+      +'<div class="g-ref" style="margin-top:10px">한국 이론값('+refG.toFixed(5)+') 대비</div>'
+      +'<div class="g-diff '+diffClass+'">'+(diff !== null ? (diff>=0?'+':'')+diff.toFixed(3)+'%' : '측정값 없음')+'</div>'
+      +(appG !== null
+        ? '<div class="g-ref" style="margin-top:8px">📱 앱 측정값: '+appG.toFixed(4)+' m/s\u00b2</div>'
+          +'<div class="g-diff '+diffClass+'">'+(appDiff !== null ? '단진자 vs 앱: '+(appDiff>=0?'+':'')+appDiff.toFixed(3)+'%' : '')+'</div>'
+        : '')
+      +'<div class="bar"><div class="bar-fill" style="width:'+barW+'%"></div></div>'
+      +'</div>';
   }).join('');
 }
 
@@ -984,15 +1320,29 @@ function renderSummary() {
 //  CHART
 // ─────────────────────────────────────────
 function updateChart() {
-  if (typeof Chart === 'undefined') return;
-  const labels = FLOORS.map(f => `${f}층`);
-  const pendulumData = FLOORS.map(f => floorAvgG(f));
-  const appData = FLOORS.map(f => parseFloat(state.floors[f].appG) || null);
-  const ref = FLOORS.map(() => getKoreaG());
+  const floors = getFloors();
+  const labels = floors.map(f => f + '층');
+  const pendulumData = floors.map(f => {
+    const v = floorAvgG(f);
+    return v !== null ? parseFloat(v.toFixed(5)) : null;
+  });
+  const appData = floors.map(f => {
+    const v = parseFloat(state.floors[f] && state.floors[f].appG);
+    return isFinite(v) && v > 0 ? v : null;
+  });
+  const refVal = getKoreaG();
+  const ref = floors.map(() => parseFloat(refVal.toFixed(5)));
 
   if (chart) { chart.destroy(); chart = null; }
 
   const ctx = document.getElementById('gravityChart').getContext('2d');
+  if (!ctx) return;
+
+  // y축 범위: 데이터 기반 자동 계산
+  const allVals = [...pendulumData, ...appData, refVal].filter(v => v !== null && isFinite(v));
+  const yMin = allVals.length ? Math.floor((Math.min(...allVals) - 0.05) * 20) / 20 : 9.6;
+  const yMax = allVals.length ? Math.ceil((Math.max(...allVals)  + 0.05) * 20) / 20 : 10.0;
+
   chart = new Chart(ctx, {
     type: 'bar',
     data: {
@@ -1005,6 +1355,7 @@ function updateChart() {
           borderColor: 'rgba(0,212,255,0.8)',
           borderWidth: 2,
           borderRadius: 6,
+          order: 2,
         },
         {
           label: '앱 측정 g',
@@ -1013,46 +1364,59 @@ function updateChart() {
           borderColor: 'rgba(124,58,237,0.8)',
           borderWidth: 2,
           borderRadius: 6,
-          type: 'bar',
+          order: 3,
         },
         {
-          label: '한국 이론값 (위도·고도 보정)',
+          label: '한국 이론값 (' + refVal.toFixed(5) + ')',
           data: ref,
           type: 'line',
-          borderColor: 'rgba(16,185,129,0.7)',
+          borderColor: 'rgba(16,185,129,0.85)',
           borderWidth: 2,
-          borderDash: [6,4],
+          borderDash: [8, 4],
           pointRadius: 0,
+          pointHoverRadius: 0,
           fill: false,
+          order: 1,
+          tension: 0,
         }
       ]
     },
     options: {
       responsive: true,
-      maintainAspectRatio: false,
+      maintainAspectRatio: true,
+      interaction: { mode: 'index', intersect: false },
       plugins: {
         legend: {
           labels: {
             color: '#94a3b8',
-            font: { size: 12, family: "'Noto Sans KR', sans-serif" },
+            font: { size: 12 },
             boxWidth: 14,
+            padding: 16,
           }
         },
-        tooltip: { mode: 'index', intersect: false }
+        tooltip: {
+          callbacks: {
+            label: ctx => {
+              const v = ctx.parsed.y;
+              return v !== null && isFinite(v) ? ctx.dataset.label + ': ' + v.toFixed(5) : null;
+            }
+          }
+        }
       },
       scales: {
         x: {
           grid: { color: '#1f2f4a' },
-          ticks: { color: '#94a3b8', font: { size: 12, family: "'Space Mono', monospace" }, maxRotation: 0 }
+          ticks: { color: '#94a3b8', font: { size: 12 } }
         },
         y: {
           grid: { color: '#1f2f4a' },
+          min: yMin,
+          max: yMax,
           ticks: {
             color: '#94a3b8',
-            font: { size: 12, family: "'Space Mono', monospace" },
-            callback: v => v ? v.toFixed(2) : ''
+            font: { size: 12 },
+            callback: v => v.toFixed(3)
           },
-          min: 9.5, max: 10.2,
           title: { display: true, text: 'm/s²', color: '#64748b', font: { size: 12 } }
         }
       }
@@ -1064,9 +1428,7 @@ function updateChart() {
 //  UTILS
 // ─────────────────────────────────────────
 function escHtml(s) {
-  return String(s||'')
-    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
 let toastTimer = null;
@@ -1079,6 +1441,7 @@ function showToast(msg) {
 }
 
 function renderAll() {
+  renderFloorTabs();
   renderFloorContent();
   renderSummary();
   updateChart();
